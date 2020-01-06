@@ -33,24 +33,13 @@ Instructions:
    * @return {Promise}    - A Promise that resolves when the XHR succeeds and fails otherwise.
    */
   function get(url) {
-    return new Promise(function(resolve, reject){
-      var req = new XMLHttpRequest();
-      req.open('GET', url);
-      req.onload = function() {
-        if (req.status === 200) {
-          resolve(req.response);
-        } else {
-          reject(req.statusText)
-        }
-      };
-      req.onerror = function(e) {
-        reject(e);
-      };
-      req.send();
-    })
-    
+    return fetch(url);
   }
-
+  function getJson(url){
+    return get(url).then(response=>{
+      return response.json();
+    });
+  }
   window.addEventListener('WebComponentsReady', function() {
     home = document.querySelector('section[data-route="home"]');
     /*
